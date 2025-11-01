@@ -84,13 +84,13 @@ const FieldCard = ({ field }: FieldCardProps) => {
         </div>
 
         {/* 底部信息 */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-          <div className="text-sm text-gray-400">
+        <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/10 flex-wrap sm:flex-nowrap">
+          <div className="text-sm text-gray-400 flex-shrink-0">
             面积: <span className="text-white font-semibold tabular-nums">{field.area}</span> 亩
           </div>
           <Link
             to={`/field/${field.id}`}
-            className="px-6 py-2.5 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary text-primary rounded-lg hover:bg-primary hover:text-dark transition-all duration-300 text-sm font-semibold glow-button relative overflow-hidden group/btn whitespace-nowrap flex-shrink-0"
+            className="px-5 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary text-primary rounded-lg hover:bg-primary hover:text-dark transition-all duration-300 text-sm font-semibold glow-button relative overflow-hidden group/btn whitespace-nowrap flex-shrink-0 min-w-fit"
           >
             <span className="relative z-10 flex items-center space-x-1">
               <span>查看详情</span>

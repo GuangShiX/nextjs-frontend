@@ -37,7 +37,7 @@ const Home = () => {
       <ParticleBackground />
 
       {/* 主内容区 */}
-      <div className="relative z-10 container mx-auto px-6 pt-32 pb-12">
+      <div className="relative z-10 container mx-auto px-6 pt-40 pb-12">
         {/* 标题区 */}
         <div className="text-center mb-16 animate-float flex flex-col items-center">
           <div className="mb-6 flex items-center justify-center space-x-4">
@@ -109,7 +109,7 @@ const Home = () => {
         </div>
 
         {/* 地块卡片网格 */}
-        <div className="mb-12">
+        <div className="mb-20">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-white flex items-center">
               <span className="mr-3 text-4xl">🗺️</span>
