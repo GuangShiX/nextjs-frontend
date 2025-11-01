@@ -1,0 +1,146 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-2xl 0;
+
+  @include mobile-only {
+    padding: $spacing-lg 0;
+  }
+}
+
+.hero {
+  text-align: center;
+  padding: $spacing-2xl 0;
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  color: white;
+  border-radius: $border-radius-lg;
+  margin-bottom: $spacing-2xl;
+
+  h1 {
+    margin-bottom: $spacing-md;
+    color: white;
+  }
+
+  p {
+    font-size: $font-size-lg;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: 0 auto $spacing-xl;
+  }
+
+  .hero-actions {
+    @include flex-center;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+
+    .btn {
+      min-width: 150px;
+    }
+  }
+}
+
+.features {
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-2xl;
+  }
+
+  .feature-card {
+    @include card;
+    text-align: center;
+
+    .icon {
+      font-size: $font-size-3xl;
+      margin-bottom: $spacing-md;
+    }
+
+    h3 {
+      color: $primary-color;
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      font-size: $font-size-sm;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.tech-stack {
+  background: white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-2xl;
+
+  h2 {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+  }
+
+  .tech-item {
+    padding: $spacing-lg;
+    background: $bg-secondary;
+    border-radius: $border-radius;
+    border-left: 4px solid $primary-color;
+
+    h3 {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-sm;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        padding: $spacing-xs 0;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+
+        &:before {
+          content: '✓ ';
+          color: $success-color;
+          font-weight: bold;
+          margin-right: $spacing-xs;
+        }
+      }
+    }
+  }
+}
+
+.cta {
+  text-align: center;
+  padding: $spacing-2xl;
+  background: $bg-dark;
+  color: white;
+  border-radius: $border-radius-lg;
+
+  h2 {
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: $spacing-xl;
+  }
+
+  .btn {
+    background: white;
+    color: $bg-dark;
+
+    &:hover {
+      background: darken(white, 10%);
+    }
+  }
+}

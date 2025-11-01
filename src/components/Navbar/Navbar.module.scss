@@ -1,0 +1,58 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.navbar {
+  background: white;
+  box-shadow: $shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .container {
+    @include flex-between;
+    padding: $spacing-md $spacing-lg;
+  }
+
+  .logo {
+    font-size: $font-size-xl;
+    font-weight: bold;
+    color: $primary-color;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: $spacing-lg;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include mobile-only {
+      display: none;
+    }
+
+    a {
+      color: $text-secondary;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .menu-button {
+    display: none;
+    background: none;
+    border: none;
+    font-size: $font-size-xl;
+    cursor: pointer;
+    color: $text-primary;
+
+    @include mobile-only {
+      display: block;
+    }
+  }
+}
