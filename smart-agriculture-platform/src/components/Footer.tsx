@@ -2,9 +2,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="glass-card backdrop-blur-md mt-32 pt-5 border-t border-primary/20">
-      <div className="container mx-auto px-6 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <footer className="glass-card backdrop-blur-md mt-16 md:mt-20 pt-5 border-t border-primary/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* 项目信息 */}
           <div>
             <h3 className="text-lg font-bold text-primary mb-3">智慧农业预测平台</h3>

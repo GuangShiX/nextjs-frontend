@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-dark via-dark-light to-dark flex flex-col ml-[10%]">
+      <div className="min-h-screen bg-gradient-to-br from-dark via-dark-light to-dark flex flex-col">
         <Header />
         <main className="flex-1">
           <Routes>

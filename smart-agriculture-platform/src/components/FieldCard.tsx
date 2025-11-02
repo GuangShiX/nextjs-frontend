@@ -10,7 +10,7 @@ const FieldCard = ({ field }: FieldCardProps) => {
   const stats: FieldStats = calculateFieldStats(field);
 
   return (
-    <div className="glass-card p-6 hover:scale-105 transition-all duration-300 group relative overflow-hidden">
+    <div className="glass-card p-5 md:p-6 hover:scale-105 transition-all duration-300 group relative overflow-hidden">
       {/* 背景渐变效果 */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
@@ -37,9 +37,9 @@ const FieldCard = ({ field }: FieldCardProps) => {
         </p>
 
         {/* 数据指标网格 */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6">
           {/* 温度 */}
-          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-4 border border-white/10 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-3.5 md:p-4 border border-white/10 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-xs font-medium">平均温度</span>
               <span className="text-2xl">🌡️</span>
@@ -50,7 +50,7 @@ const FieldCard = ({ field }: FieldCardProps) => {
           </div>
 
           {/* 湿度 */}
-          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-4 border border-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-400/10">
+          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-3.5 md:p-4 border border-white/10 hover:border-blue-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-400/10">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-xs font-medium">土壤湿度</span>
               <span className="text-2xl">💧</span>
@@ -61,7 +61,7 @@ const FieldCard = ({ field }: FieldCardProps) => {
           </div>
 
           {/* 微生物活性 */}
-          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-4 border border-white/10 hover:border-green-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/10">
+          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-3.5 md:p-4 border border-white/10 hover:border-green-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/10">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-xs font-medium">微生物活性</span>
               <span className="text-2xl">🦠</span>
@@ -72,7 +72,7 @@ const FieldCard = ({ field }: FieldCardProps) => {
           </div>
 
           {/* NDVI */}
-          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-4 border border-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10">
+          <div className="bg-gradient-to-br from-white/5 to-white/0 rounded-xl p-3.5 md:p-4 border border-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-400 text-xs font-medium">植被指数</span>
               <span className="text-2xl">🌿</span>

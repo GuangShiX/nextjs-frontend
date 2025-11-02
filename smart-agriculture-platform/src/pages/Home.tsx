@@ -37,9 +37,9 @@ const Home = () => {
       <ParticleBackground />
 
       {/* 主内容区 */}
-      <div className="relative z-10 container mx-auto px-6 pt-40 pb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* 标题区 */}
-        <div className="text-center mb-16 animate-float flex flex-col items-center">
+        <div className="text-center mb-12 md:mb-16 animate-float flex flex-col items-center">
           <div className="mb-6 flex items-center justify-center space-x-4">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary"></div>
             <span className="text-5xl animate-pulse-slow">🌾</span>
@@ -73,7 +73,7 @@ const Home = () => {
         </div>
 
         {/* 统计卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
           <div className="glass-card p-8 text-center hover:scale-105 transition-all duration-300 group relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative z-10">
@@ -109,7 +109,7 @@ const Home = () => {
         </div>
 
         {/* 地块卡片网格 */}
-        <div className="mb-20">
+        <div className="mb-16 md:mb-20">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-white flex items-center">
               <span className="mr-3 text-4xl">🗺️</span>
@@ -119,7 +119,7 @@ const Home = () => {
               实时阳光示范田 - <span className="text-primary">{fields.length}</span> 个地块在线
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {fields.map((field) => (
               <FieldCard key={field.id} field={field} />
             ))}
@@ -127,7 +127,7 @@ const Home = () => {
         </div>
 
         {/* 功能介绍 */}
-        <div className="glass-card p-10 relative overflow-hidden mt-16">
+        <div className="glass-card p-6 md:p-10 relative overflow-hidden mt-12 md:mt-16">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
 
@@ -135,7 +135,7 @@ const Home = () => {
             <h2 className="text-3xl font-bold text-white mb-8 text-center">
               <span className="gradient-text">平台核心功能</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
               <div className="text-center flex flex-col items-center group">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-4xl leading-none">📡</span>

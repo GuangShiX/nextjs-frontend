@@ -70,7 +70,7 @@ const FieldDetail = () => {
     <div className="relative">
       <ParticleBackground />
 
-      <div className="relative z-10 container mx-auto px-6 py-12 pb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* 面包屑导航 */}
         <div className="mb-6 flex items-center space-x-2 text-sm text-gray-400">
           <Link to="/" className="hover:text-primary transition-colors">首页</Link>
@@ -79,7 +79,7 @@ const FieldDetail = () => {
         </div>
 
         {/* 地块标题区 */}
-        <div className="glass-card p-8 mb-8">
+        <div className="glass-card p-6 md:p-8 mb-6 md:mb-8">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center space-x-4 mb-4">
@@ -115,9 +115,9 @@ const FieldDetail = () => {
         </div>
 
         {/* 图表和建议区域 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* 左侧图表区 */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 md:space-y-8">
             <LineChartPanel
               data={field.data}
               predictions={field.predictions}
@@ -162,7 +162,7 @@ const FieldDetail = () => {
               <RecommendationPanel stats={stats} fieldName={field.name} />
 
               {/* 快速操作 */}
-              <div className="glass-card p-6 mt-8">
+              <div className="glass-card p-5 md:p-6 mt-6 md:mt-8">
                 <h3 className="text-lg font-bold text-white mb-4">快速操作</h3>
                 <div className="space-y-3">
                   <button

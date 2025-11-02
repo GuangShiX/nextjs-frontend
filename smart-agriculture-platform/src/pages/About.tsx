@@ -5,9 +5,9 @@ const About = () => {
     <div className="relative">
       <ParticleBackground />
 
-      <div className="relative z-10 container mx-auto px-6 py-12 pb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* 标题区 */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <h1 className="text-5xl font-bold gradient-text mb-6">关于项目</h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             探索农业现代化的数字未来
@@ -15,7 +15,7 @@ const About = () => {
         </div>
 
         {/* 项目简介 */}
-        <div className="glass-card p-8 mb-8">
+        <div className="glass-card p-6 md:p-8 mb-8 md:mb-12">
           <div className="flex items-center space-x-3 mb-6">
             <span className="text-4xl">🌾</span>
             <h2 className="text-3xl font-bold text-white">项目简介</h2>
@@ -35,13 +35,13 @@ const About = () => {
         </div>
 
         {/* 核心功能 */}
-        <div className="glass-card p-8 mb-8">
+        <div className="glass-card p-6 md:p-8 mb-8 md:mb-12">
           <div className="flex items-center space-x-3 mb-6">
             <span className="text-4xl">⚡</span>
             <h2 className="text-3xl font-bold text-white">核心功能</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-white/5 p-5 md:p-6 rounded-lg border border-white/10">
               <div className="flex items-center space-x-3 mb-3">
                 <span className="text-3xl">📊</span>
                 <h3 className="text-xl font-bold text-primary">数据可视化</h3>
@@ -51,7 +51,7 @@ const About = () => {
                 帮助用户快速了解农田状况。
               </p>
             </div>
-            <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <div className="bg-white/5 p-5 md:p-6 rounded-lg border border-white/10">
               <div className="flex items-center space-x-3 mb-3">
                 <span className="text-3xl">🔮</span>
                 <h3 className="text-xl font-bold text-accent">智能预测</h3>
@@ -61,7 +61,7 @@ const About = () => {
                 为农田管理提供前瞻性指导。
               </p>
             </div>
-            <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <div className="bg-white/5 p-5 md:p-6 rounded-lg border border-white/10">
               <div className="flex items-center space-x-3 mb-3">
                 <span className="text-3xl">💡</span>
                 <h3 className="text-xl font-bold text-green-400">智能建议</h3>
@@ -71,7 +71,7 @@ const About = () => {
                 包括灌溉、施肥、病虫害防治等。
               </p>
             </div>
-            <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <div className="bg-white/5 p-5 md:p-6 rounded-lg border border-white/10">
               <div className="flex items-center space-x-3 mb-3">
                 <span className="text-3xl">📥</span>
                 <h3 className="text-xl font-bold text-blue-400">数据导出</h3>
@@ -85,12 +85,12 @@ const About = () => {
         </div>
 
         {/* 技术栈 */}
-        <div className="glass-card p-8 mb-8">
+        <div className="glass-card p-6 md:p-8 mb-8 md:mb-12">
           <div className="flex items-center space-x-3 mb-6">
             <span className="text-4xl">🛠️</span>
             <h2 className="text-3xl font-bold text-white">技术架构</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
               { name: 'React 18', icon: '⚛️', desc: '现代化UI框架' },
               { name: 'TypeScript', icon: '📘', desc: '类型安全' },
@@ -103,7 +103,7 @@ const About = () => {
             ].map((tech, index) => (
               <div
                 key={index}
-                className="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-primary/50 transition-all text-center group"
+                className="bg-white/5 p-3.5 md:p-4 rounded-lg border border-white/10 hover:border-primary/50 transition-all text-center group"
               >
                 <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">
                   {tech.icon}
@@ -116,7 +116,7 @@ const About = () => {
         </div>
 
         {/* 研究意义 */}
-        <div className="glass-card p-8 mb-8">
+        <div className="glass-card p-6 md:p-8 mb-8 md:mb-12">
           <div className="flex items-center space-x-3 mb-6">
             <span className="text-4xl">🎯</span>
             <h2 className="text-3xl font-bold text-white">社会价值</h2>
@@ -142,7 +142,7 @@ const About = () => {
         </div>
 
         {/* 团队信息 */}
-        <div className="glass-card p-8">
+        <div className="glass-card p-6 md:p-8">
           <div className="flex items-center space-x-3 mb-6">
             <span className="text-4xl">👥</span>
             <h2 className="text-3xl font-bold text-white">项目团队</h2>

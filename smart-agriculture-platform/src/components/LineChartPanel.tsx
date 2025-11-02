@@ -38,7 +38,7 @@ const LineChartPanel = ({ data, predictions, dataKey, title, unit, color, icon }
   };
 
   return (
-    <div className="glass-card p-6">
+    <div className="glass-card p-5 md:p-6">
       {/* 标题 */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
@@ -110,20 +110,20 @@ const LineChartPanel = ({ data, predictions, dataKey, title, unit, color, icon }
       </ResponsiveContainer>
 
       {/* 统计信息 */}
-      <div className="mt-4 grid grid-cols-3 gap-4">
-        <div className="text-center p-3 bg-white/5 rounded-lg">
+      <div className="mt-4 grid grid-cols-3 gap-3 md:gap-4">
+        <div className="text-center p-2.5 md:p-3 bg-white/5 rounded-lg">
           <p className="text-xs text-gray-400 mb-1">当前值</p>
           <p className="text-lg font-bold" style={{ color }}>
             {data[data.length - 1][dataKey]} {unit}
           </p>
         </div>
-        <div className="text-center p-3 bg-white/5 rounded-lg">
+        <div className="text-center p-2.5 md:p-3 bg-white/5 rounded-lg">
           <p className="text-xs text-gray-400 mb-1">平均值</p>
           <p className="text-lg font-bold" style={{ color }}>
             {(data.slice(-7).reduce((sum, d) => sum + Number(d[dataKey]), 0) / 7).toFixed(2)} {unit}
           </p>
         </div>
-        <div className="text-center p-3 bg-white/5 rounded-lg">
+        <div className="text-center p-2.5 md:p-3 bg-white/5 rounded-lg">
           <p className="text-xs text-gray-400 mb-1">预测趋势</p>
           <p className="text-lg font-bold text-accent">
             {Number(predictions[predictions.length - 1][dataKey]) > Number(data[data.length - 1][dataKey]) ? '↗ 上升' : '↘ 下降'}
