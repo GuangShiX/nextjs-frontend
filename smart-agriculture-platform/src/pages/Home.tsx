@@ -46,14 +46,14 @@ const Home = () => {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary"></div>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
-            智慧农业预测平台
+            智慧云枢·农户智能预测系统
           </h1>
           <p className="text-xl text-gray-300 mb-4 font-light tracking-wide">
-            Agricultural Intelligence & Prediction System
+            ZhiNong Cloud Core - AI-Powered Farm Management
           </p>
           <div className="max-w-4xl px-4">
             <p className="text-base text-gray-400 leading-relaxed mb-6">
-              基于现代化数字技术的农业数据分析与预测系统，实时监测温度、湿度、微生物活性、植被指数等关键指标，为农田管理提供科学决策支持
+              专为个体农户与中小合作社设计的智能预测平台，实时监测温度、湿度、微生物活性、植被指数等关键指标，通过人工智能预测作物生长趋势，提供精准管理建议
             </p>
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center space-x-2">
@@ -79,7 +79,7 @@ const Home = () => {
             <div className="relative z-10">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">🌾</div>
               <div className="text-4xl font-bold text-primary mb-3 tabular-nums">{fields.length}</div>
-              <div className="text-sm text-gray-400 font-medium tracking-wide">监测地块</div>
+              <div className="text-sm text-gray-400 font-medium tracking-wide">我的农田</div>
             </div>
           </div>
           <div className="glass-card p-8 text-center hover:scale-105 transition-all duration-300 group relative overflow-hidden">
@@ -113,10 +113,10 @@ const Home = () => {
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-white flex items-center">
               <span className="mr-3 text-4xl">🗺️</span>
-              <span className="gradient-text">监测地块</span>
+              <span className="gradient-text">我的农田</span>
             </h2>
             <div className="text-sm text-gray-400">
-              实时阳光示范田 - <span className="text-primary">{fields.length}</span> 个地块在线
+              智能管理系统 - <span className="text-primary">{fields.length}</span> 块农田在线
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -140,27 +140,27 @@ const Home = () => {
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-4xl leading-none">📡</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">实时监测</h3>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors">趋势可视化</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  24小时不间断监测农田环境数据，及时掌握温度、湿度等关键指标变化
+                  直观呈现温度、湿度、微生物活性及NDVI指数的历史趋势与预测图表
                 </p>
               </div>
               <div className="text-center flex flex-col items-center group">
                 <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-4xl leading-none">🤖</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">智能预测</h3>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">AI智能预测</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  基于机器学习算法分析历史数据，提供未来一周的环境趋势预测
+                  基于人工智能算法分析作物生长数据，预测未来一周的产量趋势与环境变化
                 </p>
               </div>
               <div className="text-center flex flex-col items-center group">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-400/20 to-blue-400/5 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="text-4xl leading-none">💡</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">决策建议</h3>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">精准管理建议</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  根据实时数据和预测结果，自动生成科学的农田管理建议
+                  根据土壤、气象与微生物数据，生成施肥、农药使用与灌溉的个性化建议
                 </p>
               </div>
             </div>

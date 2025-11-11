@@ -114,10 +114,18 @@ const FieldDetail = () => {
           </div>
         </div>
 
-        {/* 图表和建议区域 */}
+        {/* 数据可视化与智能决策区域 (左右分栏布局) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* 左侧图表区 */}
+          {/* 左侧:历史趋势图表区 */}
           <div className="lg:col-span-2 space-y-6 md:space-y-8">
+            <div className="flex items-center space-x-3 mb-6">
+              <span className="text-4xl">📊</span>
+              <div>
+                <h2 className="text-3xl font-bold gradient-text">历史趋势与未来预测</h2>
+                <p className="text-gray-400 text-sm mt-1">过去30天历史数据与未来7天预测曲线</p>
+              </div>
+            </div>
+
             <LineChartPanel
               data={field.data}
               predictions={field.predictions}
@@ -156,14 +164,25 @@ const FieldDetail = () => {
             />
           </div>
 
-          {/* 右侧建议区 */}
+          {/* 右侧:AI预测与智能决策区 */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
-              <RecommendationPanel stats={stats} fieldName={field.name} />
+            <div className="sticky top-24 space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <span className="text-4xl">🤖</span>
+                <div>
+                  <h2 className="text-2xl font-bold gradient-text">AI智能决策</h2>
+                  <p className="text-gray-400 text-xs mt-1">精准管理建议</p>
+                </div>
+              </div>
+
+              <RecommendationPanel stats={stats} fieldName={field.name} cropType={field.crop} />
 
               {/* 快速操作 */}
-              <div className="glass-card p-5 md:p-6 mt-6 md:mt-8">
-                <h3 className="text-lg font-bold text-white mb-4">快速操作</h3>
+              <div className="glass-card p-5 md:p-6 mt-6">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center">
+                  <span className="mr-3 text-2xl">⚡</span>
+                  快速操作
+                </h3>
                 <div className="space-y-3">
                   <button
                     onClick={handleExport}

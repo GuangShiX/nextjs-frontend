@@ -1,4 +1,4 @@
-import { Field, DataPoint, FieldStats } from '../types';
+import { Field, DataPoint, FieldStats, ManagementRecommendation, FertilizerRecommendation, PesticideRecommendation } from '../types';
 
 /**
  * 生成带有自然波动的数据点
@@ -126,29 +126,29 @@ export function generateAllFieldsData(): Field[] {
   return [
     generateFieldData(
       'field-1',
-      '阳光示范田',
-      '北纬 35.2° 东经 118.5°',
+      '张家小麦田',
+      '山东泰安·北纬 36.2° 东经 117.1°',
       '优质小麦',
-      120,
-      '采用节水灌溉技术的现代化示范田，土壤肥沃，光照充足。',
+      15,
+      '位于泰山脚下的小型家庭农场,土壤肥沃,光照充足,采用节水灌溉技术。',
       1.23
     ),
     generateFieldData(
       'field-2',
-      '西川水田',
-      '北纬 34.8° 东经 119.2°',
+      '李家水稻田',
+      '湖北宜昌·北纬 30.7° 东经 111.3°',
       '有机水稻',
-      95,
-      '传统水稻种植区，水源充沛，生态环境优良，采用有机种植模式。',
+      12,
+      '三峡库区的梯田水稻种植区,水源充沛,生态环境优良,采用有机种植模式。',
       2.47
     ),
     generateFieldData(
       'field-3',
-      '北岭试验田',
-      '北纬 35.6° 东经 118.1°',
+      '王家山地玉米田',
+      '云南昆明·北纬 25.0° 东经 102.7°',
       '高产玉米',
-      150,
-      '高科技试验田，采用精准农业技术，配备智能监测系统和自动化设备。',
+      18,
+      '高海拔山区农田(海拔约1900米),昼夜温差大,采用坡地种植技术,配备智能监测系统。',
       3.89
     ),
   ];
@@ -174,7 +174,151 @@ export function calculateFieldStats(field: Field): FieldStats {
 }
 
 /**
- * 生成农田建议
+ * 生成综合管理建议(包含施肥、农药、灌溉建议)
+ */
+export function generateManagementRecommendations(stats: FieldStats, cropType: string): ManagementRecommendation {
+  const recommendation: ManagementRecommendation = {
+    general: [],
+    fertilizers: [],
+    pesticides: [],
+    irrigation: []
+  };
+
+  // ========== 常规建议 ==========
+  if (stats.avgTemperature > 30) {
+    recommendation.general.push('气温偏高，建议增加遮阳措施或调整灌溉时间至早晚');
+  } else if (stats.avgTemperature < 18) {
+    recommendation.general.push('气温偏低，注意防寒保暖，可考虑使用保温覆盖物');
+  }
+
+  if (stats.avgNdvi > 0.75) {
+    recommendation.general.push('植被生长状况优良，作物长势良好，保持当前管理策略');
+  } else if (stats.avgNdvi < 0.5) {
+    recommendation.general.push('植被指数偏低，需重点关注作物营养供给');
+  }
+
+  // ========== 施肥建议 ==========
+  // 基于微生物活性的有机肥建议
+  if (stats.avgMicrobialActivity < 0.5) {
+    recommendation.fertilizers.push({
+      type: '腐熟有机肥',
+      dosage: '15-20 kg/亩',
+      timing: '播种前7-10天或生长期前期',
+      reason: '微生物活性偏低(当前 ' + stats.avgMicrobialActivity.toFixed(2) + '),需增强土壤生物活性'
+    });
+  }
+
+  // 基于NDVI的氮磷钾建议
+  if (stats.avgNdvi < 0.5) {
+    recommendation.fertilizers.push({
+      type: '氮磷钾复合肥(15-15-15)',
+      dosage: '10-12 kg/亩',
+      timing: '作物生长期,分2-3次追施',
+      reason: 'NDVI指数偏低(当前 ' + stats.avgNdvi.toFixed(2) + '),作物需补充全面营养'
+    });
+  } else if (stats.avgNdvi >= 0.5 && stats.avgNdvi < 0.7) {
+    recommendation.fertilizers.push({
+      type: '高氮复合肥(20-10-10)',
+      dosage: '8-10 kg/亩',
+      timing: '作物快速生长期追施',
+      reason: 'NDVI指数中等(当前 ' + stats.avgNdvi.toFixed(2) + '),适量补氮促进叶片生长'
+    });
+  }
+
+  // 根据作物类型的专门建议
+  if (cropType.includes('小麦')) {
+    recommendation.fertilizers.push({
+      type: '尿素(含氮46%)',
+      dosage: '6-8 kg/亩',
+      timing: '拔节期至孕穗期',
+      reason: '小麦拔节期需大量氮素促进穗分化'
+    });
+  } else if (cropType.includes('水稻')) {
+    recommendation.fertilizers.push({
+      type: '钾肥(氯化钾)',
+      dosage: '5-7 kg/亩',
+      timing: '分蘖期和孕穗期',
+      reason: '水稻对钾需求高,可提高抗倒伏能力和籽粒饱满度'
+    });
+  } else if (cropType.includes('玉米')) {
+    recommendation.fertilizers.push({
+      type: '磷酸二铵',
+      dosage: '10-12 kg/亩',
+      timing: '播种时作基肥,或苗期追施',
+      reason: '玉米苗期对磷需求高,促进根系发育'
+    });
+  }
+
+  // ========== 农药建议 ==========
+  // 基于湿度的病害预防
+  if (stats.avgHumidity > 80) {
+    recommendation.pesticides.push({
+      name: '多菌灵可湿性粉剂',
+      dosage: '50%多菌灵 80-100g/亩,稀释后喷雾',
+      timing: '清晨或傍晚(避开高温时段)',
+      target: '预防真菌性病害(如白粉病、锈病、叶斑病)',
+      precaution: '雨前或雨后不宜施药,间隔7-10天可重复施用'
+    });
+  }
+
+  // 基于温度和湿度的虫害预防
+  if (stats.avgTemperature > 25 && stats.avgHumidity < 70) {
+    recommendation.pesticides.push({
+      name: '吡虫啉可溶液剂',
+      dosage: '10%吡虫啉 20-30ml/亩,稀释1000-1500倍喷雾',
+      timing: '早晨或傍晚',
+      target: '防治刺吸式害虫(蚜虫、粉虱、蓟马)',
+      precaution: '注意轮换用药,避免害虫产生抗药性,采收前15天停止使用'
+    });
+  }
+
+  // NDVI偏低可能伴随病虫害
+  if (stats.avgNdvi < 0.5) {
+    recommendation.pesticides.push({
+      name: '高效氯氰菊酯',
+      dosage: '4.5%高效氯氰菊酯 40-50ml/亩,稀释1500倍喷雾',
+      timing: '虫害发生初期,傍晚施药效果更佳',
+      target: '防治鳞翅目害虫(菜青虫、玉米螟、棉铃虫)',
+      precaution: '对鱼类高毒,避免药液进入水体,采收前7天停用'
+    });
+  }
+
+  // 预防性用药(适用于生长健康但需预防的情况)
+  if (stats.avgNdvi > 0.7 && recommendation.pesticides.length === 0) {
+    recommendation.pesticides.push({
+      name: '苦参碱水剂(生物农药)',
+      dosage: '0.3%苦参碱 100-150ml/亩,稀释500-800倍喷雾',
+      timing: '生长期每隔10-15天预防性喷施',
+      target: '预防多种害虫(蚜虫、红蜘蛛、小菜蛾)',
+      precaution: '生物农药,对环境友好,对人畜安全,可用于有机农业'
+    });
+  }
+
+  // ========== 灌溉建议 ==========
+  if (stats.avgHumidity < 50) {
+    recommendation.irrigation.push('土壤湿度偏低(当前 ' + stats.avgHumidity.toFixed(1) + '%),建议增加灌溉频次');
+    recommendation.irrigation.push('推荐灌溉时间:清晨6-8点或傍晚18-20点,避免高温时段');
+    recommendation.irrigation.push('采用滴灌或喷灌方式,每次灌溉量控制在25-35mm');
+  } else if (stats.avgHumidity > 80) {
+    recommendation.irrigation.push('湿度过高(当前 ' + stats.avgHumidity.toFixed(1) + '%),暂停灌溉');
+    recommendation.irrigation.push('加强田间排水,防止积水导致根系缺氧');
+    recommendation.irrigation.push('注意通风,降低田间湿度,预防病害发生');
+  } else {
+    recommendation.irrigation.push('土壤湿度适宜(当前 ' + stats.avgHumidity.toFixed(1) + '%),保持正常灌溉节奏');
+    recommendation.irrigation.push('根据作物需水特性和天气预报灵活调整');
+  }
+
+  // 如果所有指标正常且没有建议
+  if (recommendation.general.length === 0) {
+    recommendation.general.push('各项指标正常,继续保持良好的田间管理');
+  }
+
+  return recommendation;
+}
+
+/**
+ * 生成农田建议(保留旧函数,用于向后兼容)
+ * @deprecated 推荐使用 generateManagementRecommendations
  */
 export function generateRecommendations(stats: FieldStats): string[] {
   const recommendations: string[] = [];
