@@ -1,4 +1,4 @@
-import { Field, DataPoint, FieldStats, ManagementRecommendation, FertilizerRecommendation, PesticideRecommendation } from '../types';
+import { Field, DataPoint, FieldStats, ManagementRecommendation } from '../types';
 
 /**
  * 生成带有自然波动的数据点
@@ -51,6 +51,7 @@ function generateDataPoint(
 
 /**
  * 生成预测数据（基于历史数据的趋势）
+ * 预测值从当前实际值开始，然后逐渐根据趋势变化
  */
 function generatePredictions(
   historicalData: DataPoint[],
@@ -59,26 +60,41 @@ function generatePredictions(
 ): DataPoint[] {
   const predictions: DataPoint[] = [];
   const recentData = historicalData.slice(-7); // 最近7天的数据
+  const lastDay = historicalData[historicalData.length - 1]; // 最后一天的实际数据
 
-  // 计算趋势
-  const avgTemp = recentData.reduce((sum, d) => sum + d.temperature, 0) / recentData.length;
-  const avgHumidity = recentData.reduce((sum, d) => sum + d.humidity, 0) / recentData.length;
-  const avgMicrobial = recentData.reduce((sum, d) => sum + d.microbialActivity, 0) / recentData.length;
-  const avgNdvi = recentData.reduce((sum, d) => sum + d.ndvi, 0) / recentData.length;
+  // 计算最近3天的趋势（线性回归斜率）
+  const recent3Days = historicalData.slice(-3);
+  const tempTrend = (recent3Days[2].temperature - recent3Days[0].temperature) / 2;
+  const humidityTrend = (recent3Days[2].humidity - recent3Days[0].humidity) / 2;
+  const microbialTrend = (recent3Days[2].microbialActivity - recent3Days[0].microbialActivity) / 2;
+  const ndviTrend = (recent3Days[2].ndvi - recent3Days[0].ndvi) / 2;
+
+  // 计算波动范围（基于最近7天的标准差）
+  const tempStd = Math.sqrt(recentData.reduce((sum, d) => sum + Math.pow(d.temperature - lastDay.temperature, 2), 0) / recentData.length);
+  const humidityStd = Math.sqrt(recentData.reduce((sum, d) => sum + Math.pow(d.humidity - lastDay.humidity, 2), 0) / recentData.length);
+  const microbialStd = Math.sqrt(recentData.reduce((sum, d) => sum + Math.pow(d.microbialActivity - lastDay.microbialActivity, 2), 0) / recentData.length);
+  const ndviStd = Math.sqrt(recentData.reduce((sum, d) => sum + Math.pow(d.ndvi - lastDay.ndvi, 2), 0) / recentData.length);
 
   for (let i = 1; i <= days; i++) {
     const date = new Date();
     date.setDate(date.getDate() + i);
 
-    // 预测数据有更小的波动
-    const trendFactor = Math.sin(seed * 50 + i) * 0.5 + 0.5;
+    // 随着天数增加，波动逐渐增大（不确定性增加）
+    const uncertaintyFactor = Math.min(i / days, 0.8); // 最大到 0.8
+    const randomFactor = (Math.sin(seed * 50 + i) * 2 - 1) * uncertaintyFactor;
+
+    // 预测值 = 当前值 + 趋势 * 天数 + 随机波动
+    const predictedTemp = lastDay.temperature + tempTrend * i + tempStd * randomFactor * 0.5;
+    const predictedHumidity = lastDay.humidity + humidityTrend * i + humidityStd * randomFactor * 0.5;
+    const predictedMicrobial = lastDay.microbialActivity + microbialTrend * i + microbialStd * randomFactor * 0.3;
+    const predictedNdvi = lastDay.ndvi + ndviTrend * i + ndviStd * randomFactor * 0.2;
 
     predictions.push({
       date: date.toISOString().split('T')[0],
-      temperature: parseFloat((avgTemp + (Math.random() - 0.5) * 2 * trendFactor).toFixed(1)),
-      humidity: parseFloat((avgHumidity + (Math.random() - 0.5) * 5 * trendFactor).toFixed(1)),
-      microbialActivity: parseFloat((avgMicrobial + (Math.random() - 0.5) * 0.08 * trendFactor).toFixed(3)),
-      ndvi: parseFloat((avgNdvi + (Math.random() - 0.5) * 0.05 * trendFactor).toFixed(3)),
+      temperature: parseFloat(Math.max(15, Math.min(35, predictedTemp)).toFixed(1)),
+      humidity: parseFloat(Math.max(30, Math.min(90, predictedHumidity)).toFixed(1)),
+      microbialActivity: parseFloat(Math.max(0.2, Math.min(1.0, predictedMicrobial)).toFixed(3)),
+      ndvi: parseFloat(Math.max(0.3, Math.min(1.0, predictedNdvi)).toFixed(3)),
       isPrediction: true,
     });
   }

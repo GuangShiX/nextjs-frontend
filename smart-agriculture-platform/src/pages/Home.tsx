@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import FieldCard from '../components/FieldCard';
 import ParticleBackground from '../components/ParticleBackground';
+import AppContainer from '../components/layout/AppContainer';
+import { PageHeader, Card } from '../components/ui/Card';
 import { Field } from '../types';
 import { generateAllFieldsData } from '../utils/dataGenerator';
 
@@ -37,7 +39,7 @@ const Home = () => {
       <ParticleBackground />
 
       {/* 主内容区 */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 md:pt-32 pb-16 md:pb-24">
+      <AppContainer className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* 标题区 */}
         <div className="text-center mb-12 md:mb-16 animate-float flex flex-col items-center">
           <div className="mb-6 flex items-center justify-center space-x-4">
@@ -45,35 +47,31 @@ const Home = () => {
             <span className="text-5xl animate-pulse-slow">🌾</span>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary"></div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold gradient-text mb-6 tracking-tight">
-            智慧云枢·农户智能预测系统
-          </h1>
-          <p className="text-xl text-gray-300 mb-4 font-light tracking-wide">
+          <PageHeader
+            title="智慧云枢·农户智能预测系统"
+            description="专为个体农户与中小合作社设计的智能预测平台，实时监测温度、湿度、微生物活性、植被指数等关键指标，通过人工智能预测作物生长趋势，提供精准管理建议"
+          />
+          <p className="text-xl text-gray-300 mt-4 font-light tracking-wide">
             ZhiNong Cloud Core - AI-Powered Farm Management
           </p>
-          <div className="max-w-4xl px-4">
-            <p className="text-base text-gray-400 leading-relaxed mb-6">
-              专为个体农户与中小合作社设计的智能预测平台，实时监测温度、湿度、微生物活性、植被指数等关键指标，通过人工智能预测作物生长趋势，提供精准管理建议
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                <span>实时监测</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></span>
-                <span>智能分析</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></span>
-                <span>精准预测</span>
-              </div>
+          <div className="flex items-center justify-center space-x-6 text-sm text-gray-500 mt-6">
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+              <span>实时监测</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></span>
+              <span>智能分析</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></span>
+              <span>精准预测</span>
             </div>
           </div>
         </div>
 
         {/* 统计卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 mb-12 md:mb-16">
           <div className="glass-card p-8 text-center hover:scale-105 transition-all duration-300 group relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative z-10">
@@ -111,15 +109,15 @@ const Home = () => {
         {/* 地块卡片网格 */}
         <div className="mb-16 md:mb-20">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-white flex items-center">
-              <span className="mr-3 text-4xl">🗺️</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-white flex items-center">
+              <span className="mr-3 text-3xl md:text-4xl">🗺️</span>
               <span className="gradient-text">我的农田</span>
             </h2>
-            <div className="text-sm text-gray-400">
+            <div className="text-xs md:text-sm text-gray-400">
               智能管理系统 - <span className="text-primary">{fields.length}</span> 块农田在线
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6">
             {fields.map((field) => (
               <FieldCard key={field.id} field={field} />
             ))}
@@ -127,12 +125,12 @@ const Home = () => {
         </div>
 
         {/* 功能介绍 */}
-        <div className="glass-card p-6 md:p-10 relative overflow-hidden mt-12 md:mt-16">
+        <Card className="p-6 md:p-10 relative overflow-hidden mt-12 md:mt-16">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
 
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
               <span className="gradient-text">平台核心功能</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
@@ -165,8 +163,8 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Card>
+      </AppContainer>
     </div>
   );
 };

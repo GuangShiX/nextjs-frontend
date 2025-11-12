@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../components/ParticleBackground';
 import LineChartPanel from '../components/LineChartPanel';
 import RecommendationPanel from '../components/RecommendationPanel';
+import AppContainer from '../components/layout/AppContainer';
+import { Card } from '../components/ui/Card';
 import { Field } from '../types';
 import { generateAllFieldsData, calculateFieldStats, downloadCSV } from '../utils/dataGenerator';
 
@@ -70,7 +72,7 @@ const FieldDetail = () => {
     <div className="relative">
       <ParticleBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-24 md:pt-32 pb-16 md:pb-24">
+      <AppContainer className="relative z-10 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* 面包屑导航 */}
         <div className="mb-6 flex items-center space-x-2 text-sm text-gray-400">
           <Link to="/" className="hover:text-primary transition-colors">首页</Link>
@@ -79,7 +81,7 @@ const FieldDetail = () => {
         </div>
 
         {/* 地块标题区 */}
-        <div className="glass-card p-6 md:p-8 mb-6 md:mb-8">
+        <Card className="p-6 md:p-8 mb-6 md:mb-8">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center space-x-4 mb-4">
@@ -112,17 +114,17 @@ const FieldDetail = () => {
               <span>导出报告</span>
             </button>
           </div>
-        </div>
+        </Card>
 
-        {/* 数据可视化与智能决策区域 (左右分栏布局) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* 左侧:历史趋势图表区 */}
-          <div className="lg:col-span-2 space-y-6 md:space-y-8">
+        {/* 数据可视化与智能决策区域 (左右分栏布局) - 调整为 8:4 比例 */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+          {/* 左侧:历史趋势图表区 - 占 8 列 */}
+          <div className="lg:col-span-8 space-y-6 md:space-y-8">
             <div className="flex items-center space-x-3 mb-6">
-              <span className="text-4xl">📊</span>
+              <span className="text-3xl md:text-4xl">📊</span>
               <div>
-                <h2 className="text-3xl font-bold gradient-text">历史趋势与未来预测</h2>
-                <p className="text-gray-400 text-sm mt-1">过去30天历史数据与未来7天预测曲线</p>
+                <h2 className="text-2xl md:text-3xl font-bold gradient-text">历史趋势与未来预测</h2>
+                <p className="text-gray-400 text-xs md:text-sm mt-1">过去30天历史数据与未来7天预测曲线</p>
               </div>
             </div>
 
@@ -164,13 +166,13 @@ const FieldDetail = () => {
             />
           </div>
 
-          {/* 右侧:AI预测与智能决策区 */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
+          {/* 右侧:AI预测与智能决策区 - 占 4 列 */}
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24 space-y-6">
               <div className="flex items-center space-x-3 mb-6">
-                <span className="text-4xl">🤖</span>
+                <span className="text-3xl md:text-4xl">🤖</span>
                 <div>
-                  <h2 className="text-2xl font-bold gradient-text">AI智能决策</h2>
+                  <h2 className="text-xl md:text-2xl font-bold gradient-text">AI智能决策</h2>
                   <p className="text-gray-400 text-xs mt-1">精准管理建议</p>
                 </div>
               </div>
@@ -178,7 +180,7 @@ const FieldDetail = () => {
               <RecommendationPanel stats={stats} fieldName={field.name} cropType={field.crop} />
 
               {/* 快速操作 */}
-              <div className="glass-card p-5 md:p-6 mt-6">
+              <Card className="p-5 md:p-6 mt-6">
                 <h3 className="text-lg font-bold text-white mb-4 flex items-center">
                   <span className="mr-3 text-2xl">⚡</span>
                   快速操作
@@ -214,11 +216,11 @@ const FieldDetail = () => {
                     </div>
                   </button>
                 </div>
-              </div>
+              </Card>
             </div>
           </div>
         </div>
-      </div>
+      </AppContainer>
     </div>
   );
 };

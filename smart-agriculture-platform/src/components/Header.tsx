@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import AppContainer from './layout/AppContainer';
 
 const Header = () => {
   const location = useLocation();
@@ -8,9 +9,9 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-transparent">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-4">
-        <div className="flex items-center justify-between px-4 mt-4">
+    <header className="sticky top-0 z-50 bg-transparent backdrop-blur-md">
+      <AppContainer>
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
@@ -52,7 +53,7 @@ const Header = () => {
             </a>
           </div>
         </div>
-      </nav>
+      </AppContainer>
     </header>
   );
 };

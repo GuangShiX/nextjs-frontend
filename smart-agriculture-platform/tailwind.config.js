@@ -7,11 +7,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#00FFC6',
+        primary: {
+          DEFAULT: '#00FFC6',
+          fg: '#a5f3fc',
+          muted: '#0b1220'
+        },
         secondary: '#0A192F',
         accent: '#64FFDA',
         dark: '#0A192F',
         'dark-light': '#112240',
+      },
+      boxShadow: {
+        'card': '0 1px 0 0 rgba(255,255,255,0.06), 0 8px 24px -8px rgba(0,0,0,0.45)',
+        'glow': '0 0 10px rgba(0, 255, 198, 0.3), 0 0 20px rgba(0, 255, 198, 0.2)',
+      },
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.25rem',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '112': '28rem',
+        '128': '32rem',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -34,6 +52,16 @@ export default {
       },
       backdropBlur: {
         xs: '2px',
+      },
+      fontSize: {
+        '2xs': '0.625rem',
+      },
+      lineHeight: {
+        '12': '3rem',
+      },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
       },
     },
   },

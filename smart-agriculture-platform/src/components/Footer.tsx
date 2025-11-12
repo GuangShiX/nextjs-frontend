@@ -1,10 +1,13 @@
+import AppContainer from './layout/AppContainer';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="glass-card backdrop-blur-md mt-16 md:mt-20 pt-5 border-t border-primary/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+    <footer className="glass-card backdrop-blur-md mt-12 md:mt-16 pt-5 border-t border-primary/20">
+      <AppContainer>
+        <div className="py-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* 项目信息 */}
           <div>
             <h3 className="text-lg font-bold text-primary mb-3">智慧农业预测平台</h3>
@@ -67,7 +70,8 @@ const Footer = () => {
             本平台数据仅供参考，实际农田管理请结合当地实际情况
           </p>
         </div>
-      </div>
+        </div>
+      </AppContainer>
     </footer>
   );
 };

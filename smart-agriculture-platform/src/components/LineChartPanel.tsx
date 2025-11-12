@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { DataPoint } from '../types';
 
 interface LineChartPanelProps {
@@ -12,24 +12,39 @@ interface LineChartPanelProps {
 }
 
 const LineChartPanel = ({ data, predictions, dataKey, title, unit, color, icon }: LineChartPanelProps) => {
-  // 合并历史数据和预测数据
+  // 准备历史数据（最近14天）
+  const historicalData = data.slice(-14);
+
+  // 合并历史数据和预测数据，为图表创建完整的时间轴
   const combinedData = [
-    ...data.slice(-14).map(d => ({ ...d, type: 'historical' })),
-    ...predictions.map(d => ({ ...d, type: 'prediction' }))
+    ...historicalData.map(d => ({
+      ...d,
+      type: 'historical',
+      historicalValue: d[dataKey],
+      predictionValue: null
+    })),
+    ...predictions.map((d, index) => ({
+      ...d,
+      type: 'prediction',
+      historicalValue: index === 0 ? historicalData[historicalData.length - 1][dataKey] : null,
+      predictionValue: d[dataKey]
+    }))
   ];
 
   // 自定义 Tooltip
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
+      const dataPoint = payload[0].payload;
+      const displayValue = dataPoint.type === 'prediction' ? dataPoint.predictionValue : dataPoint.historicalValue;
+
       return (
         <div className="glass-card p-4 border border-primary/30">
-          <p className="text-sm text-gray-300 mb-2">{data.date}</p>
-          <p className="text-lg font-bold" style={{ color }}>
-            {data[dataKey]} {unit}
+          <p className="text-sm text-gray-300 mb-2">{dataPoint.date}</p>
+          <p className="text-lg font-bold" style={{ color: dataPoint.type === 'prediction' ? '#64FFDA' : color }}>
+            {displayValue} {unit}
           </p>
-          {data.type === 'prediction' && (
-            <p className="text-xs text-primary mt-1">预测数据</p>
+          {dataPoint.type === 'prediction' && (
+            <p className="text-xs text-accent mt-1">预测数据</p>
           )}
         </div>
       );
@@ -68,15 +83,23 @@ const LineChartPanel = ({ data, predictions, dataKey, title, unit, color, icon }
               <stop offset="5%" stopColor={color} stopOpacity={0.3}/>
               <stop offset="95%" stopColor={color} stopOpacity={0}/>
             </linearGradient>
+            <linearGradient id={`gradient-prediction-${dataKey}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#64FFDA" stopOpacity={0.2}/>
+              <stop offset="95%" stopColor="#64FFDA" stopOpacity={0}/>
+            </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
           <XAxis
             dataKey="date"
             stroke="#888"
-            tick={{ fill: '#888', fontSize: 12 }}
-            tickFormatter={(value) => {
-              const date = new Date(value);
-              return `${date.getMonth() + 1}/${date.getDate()}`;
+            tick={{ fill: '#888', fontSize: 11 }}
+            tickFormatter={(value, index) => {
+              // 只显示部分日期标签，避免拥挤
+              if (index % 3 === 0) {
+                const date = new Date(value);
+                return `${date.getMonth() + 1}/${date.getDate()}`;
+              }
+              return '';
             }}
           />
           <YAxis
@@ -85,26 +108,52 @@ const LineChartPanel = ({ data, predictions, dataKey, title, unit, color, icon }
             label={{ value: unit, angle: -90, position: 'insideLeft', fill: '#888' }}
           />
           <Tooltip content={<CustomTooltip />} />
+
+          {/* 历史数据区域 - 实线 */}
           <Area
             type="monotone"
-            dataKey={dataKey}
+            dataKey="historicalValue"
             stroke={color}
             strokeWidth={2}
             fill={`url(#gradient-${dataKey})`}
+            connectNulls={false}
             dot={(props: any) => {
-              const { cx, cy, payload } = props;
+              if (props.payload.historicalValue === null) return null;
               return (
                 <circle
-                  cx={cx}
-                  cy={cy}
-                  r={payload.type === 'prediction' ? 4 : 3}
-                  fill={payload.type === 'prediction' ? '#64FFDA' : color}
-                  stroke={payload.type === 'prediction' ? '#64FFDA' : color}
+                  cx={props.cx}
+                  cy={props.cy}
+                  r={3}
+                  fill={color}
+                  stroke={color}
                   strokeWidth={2}
                 />
               );
             }}
-            strokeDasharray={(props: any) => props?.type === 'prediction' ? '5 5' : '0'}
+          />
+
+          {/* 预测数据区域 - 虚线 */}
+          <Area
+            type="monotone"
+            dataKey="predictionValue"
+            stroke="#64FFDA"
+            strokeWidth={2}
+            strokeDasharray="5 5"
+            fill={`url(#gradient-prediction-${dataKey})`}
+            connectNulls={true}
+            dot={(props: any) => {
+              if (props.payload.predictionValue === null) return null;
+              return (
+                <circle
+                  cx={props.cx}
+                  cy={props.cy}
+                  r={4}
+                  fill="#64FFDA"
+                  stroke="#64FFDA"
+                  strokeWidth={2}
+                />
+              );
+            }}
           />
         </AreaChart>
       </ResponsiveContainer>
