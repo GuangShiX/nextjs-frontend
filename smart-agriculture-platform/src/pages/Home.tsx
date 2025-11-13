@@ -48,7 +48,7 @@ const Home = () => {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary"></div>
           </div>
           <PageHeader
-            title="智慧云枢·农户智能预测系统"
+            title="智农云枢·农户智能预测系统"
             description="专为个体农户与中小合作社设计的智能预测平台，实时监测温度、湿度、微生物活性、植被指数等关键指标，通过人工智能预测作物生长趋势，提供精准管理建议"
           />
           <p className="text-xl text-gray-300 mt-4 font-light tracking-wide">
