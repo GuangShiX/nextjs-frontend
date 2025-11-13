@@ -21,7 +21,7 @@ const Header = () => {
               </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold gradient-text">智慧云枢</h1>
+              <h1 className="text-xl font-bold gradient-text">智农云枢</h1>
               <p className="text-xs text-gray-400 font-light tracking-wide">ZhiNong Cloud Core</p>
             </div>
           </Link>
