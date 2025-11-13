@@ -12,36 +12,47 @@ function generateDataPoint(
   date.setDate(date.getDate() - (isPrediction ? -dayIndex : 30 - dayIndex));
 
   // 使用 sin 函数模拟季节性变化 + 随机噪声
-  const timePhase = dayIndex / 30 * Math.PI * 2;
   const randomFactor = Math.sin(seed * 100 + dayIndex) * 0.3 + 0.7;
 
-  // 温度: 18-32°C，有日周期变化
-  const baseTemp = 25 + Math.sin(timePhase) * 5;
+  // 获取当前月份(0-11)和日期,用于计算真实的季节性温度
+  const currentMonth = date.getMonth();
+  const currentDay = date.getDate();
+
+  // 计算年内的天数位置(0-365),用于更精确的季节变化
+  const dayOfYear = Math.floor((currentMonth * 30.44) + currentDay);
+
+  // 使用 sin 函数模拟真实的季节性变化
+  // 温度最低点在1月15日(第15天),最高点在7月15日(第196天)
+  const seasonPhase = ((dayOfYear - 15) / 365) * Math.PI * 2;
+
+  // 温度: 年平均15°C,振幅15°C (冬季最低0°C,夏季最高30°C)
+  // 11月(第305-334天)温度约5-10°C,1月约0-5°C
+  const baseTemp = 15 + Math.sin(seasonPhase) * 15;
   const temperature = parseFloat(
-    (baseTemp + (Math.random() - 0.5) * 3 * randomFactor).toFixed(1)
+    (baseTemp + (Math.random() - 0.5) * 4 * randomFactor).toFixed(1)
   );
 
   // 湿度: 40-85%，与温度呈负相关
-  const baseHumidity = 65 - Math.sin(timePhase) * 15;
+  const baseHumidity = 65 - Math.sin(seasonPhase) * 15;
   const humidity = parseFloat(
     (baseHumidity + (Math.random() - 0.5) * 10 * randomFactor).toFixed(1)
   );
 
   // 微生物活性: 0.3-0.9，受温度和湿度影响
-  const baseMicrobial = 0.6 + Math.sin(timePhase + seed) * 0.2;
+  const baseMicrobial = 0.6 + Math.sin(seasonPhase + seed) * 0.2;
   const microbialActivity = parseFloat(
     (baseMicrobial + (Math.random() - 0.5) * 0.15 * randomFactor).toFixed(3)
   );
 
-  // NDVI: 0.4-0.9，植被生长曲线
-  const baseNdvi = 0.65 + Math.sin(timePhase * 0.5) * 0.2;
+  // NDVI: 0.4-0.9，植被生长曲线，冬季较低夏季较高
+  const baseNdvi = 0.65 + Math.sin(seasonPhase * 0.5) * 0.2;
   const ndvi = parseFloat(
     (baseNdvi + (Math.random() - 0.5) * 0.1 * randomFactor).toFixed(3)
   );
 
   return {
     date: date.toISOString().split('T')[0],
-    temperature: Math.max(15, Math.min(35, temperature)),
+    temperature: Math.max(-5, Math.min(35, temperature)),
     humidity: Math.max(30, Math.min(90, humidity)),
     microbialActivity: Math.max(0.2, Math.min(1.0, microbialActivity)),
     ndvi: Math.max(0.3, Math.min(1.0, ndvi)),
@@ -91,7 +102,7 @@ function generatePredictions(
 
     predictions.push({
       date: date.toISOString().split('T')[0],
-      temperature: parseFloat(Math.max(15, Math.min(35, predictedTemp)).toFixed(1)),
+      temperature: parseFloat(Math.max(-5, Math.min(35, predictedTemp)).toFixed(1)),
       humidity: parseFloat(Math.max(30, Math.min(90, predictedHumidity)).toFixed(1)),
       microbialActivity: parseFloat(Math.max(0.2, Math.min(1.0, predictedMicrobial)).toFixed(3)),
       ndvi: parseFloat(Math.max(0.3, Math.min(1.0, predictedNdvi)).toFixed(3)),
