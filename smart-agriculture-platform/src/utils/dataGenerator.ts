@@ -13,26 +13,26 @@ function getClimateParams(location: string): { avgTemp: number; amplitude: numbe
   // 根据纬度和实际地区调整气候参数
   if (location.includes('泰安') || latitude > 35) {
     // 山东泰安(北纬36.2°): 温带季风气候,四季分明
-    // 11月实际温度: 白天约18°C, 夜间5-10°C, 平均约10-15°C
+    // 11月实际温度: 约15°C (2025-11-13实测)
     return {
-      avgTemp: 13.5,      // 年平均13.5°C
-      amplitude: 16,      // 夏季最高29.5°C, 冬季最低-2.5°C
+      avgTemp: 16.5,      // 年平均16.5°C (调高以匹配11月15°C)
+      amplitude: 14,      // 夏季最高30.5°C, 冬季最低2.5°C
       humidityBase: 62    // 湿度适中
     };
   } else if (location.includes('宜昌') || (latitude >= 29 && latitude <= 32)) {
     // 湖北宜昌(北纬30.7°): 亚热带季风气候
-    // 11月实际温度: 15-20°C左右
+    // 11月实际温度: 约19°C (2025-11-13实测)
     return {
-      avgTemp: 17,        // 年平均17°C
-      amplitude: 14,      // 夏季最高31°C, 冬季最低3°C
+      avgTemp: 19.5,      // 年平均19.5°C (调高以匹配11月19°C)
+      amplitude: 13,      // 夏季最高32.5°C, 冬季最低6.5°C
       humidityBase: 70    // 湿度较高
     };
   } else if (location.includes('昆明') || latitude < 26) {
     // 云南昆明(北纬25.0°): 高原山地气候,四季如春
-    // 11月实际温度: 白天18-22°C, 夜间7-15°C, 平均约12-18°C
+    // 11月实际温度: 约18°C (2025-11-13实测)
     return {
-      avgTemp: 15.5,      // 年平均15.5°C
-      amplitude: 8,       // 温差小,夏季最高23.5°C, 冬季最低7.5°C
+      avgTemp: 17.5,      // 年平均17.5°C (调高以匹配11月18°C)
+      amplitude: 7.5,     // 温差小,夏季最高25°C, 冬季最低10°C
       humidityBase: 65    // 湿度适中
     };
   }
