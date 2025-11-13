@@ -1,15 +1,60 @@
 import { Field, DataPoint, FieldStats, ManagementRecommendation } from '../types';
 
 /**
+ * 根据地区纬度获取气候参数
+ * @param location 地区位置字符串(包含纬度信息)
+ * @returns 气候参数 {avgTemp: 年平均温度, amplitude: 温度振幅, humidityBase: 湿度基准}
+ */
+function getClimateParams(location: string): { avgTemp: number; amplitude: number; humidityBase: number } {
+  // 提取纬度信息(匹配"北纬 XX.X°"格式)
+  const latMatch = location.match(/北纬\s*(\d+\.?\d*)/);
+  const latitude = latMatch ? parseFloat(latMatch[1]) : 30; // 默认30°N
+
+  // 根据纬度和实际地区调整气候参数
+  if (location.includes('泰安') || latitude > 35) {
+    // 山东泰安(北纬36.2°): 温带季风气候,四季分明
+    // 11月实际温度: 白天约18°C, 夜间5-10°C, 平均约10-15°C
+    return {
+      avgTemp: 13.5,      // 年平均13.5°C
+      amplitude: 16,      // 夏季最高29.5°C, 冬季最低-2.5°C
+      humidityBase: 62    // 湿度适中
+    };
+  } else if (location.includes('宜昌') || (latitude >= 29 && latitude <= 32)) {
+    // 湖北宜昌(北纬30.7°): 亚热带季风气候
+    // 11月实际温度: 15-20°C左右
+    return {
+      avgTemp: 17,        // 年平均17°C
+      amplitude: 14,      // 夏季最高31°C, 冬季最低3°C
+      humidityBase: 70    // 湿度较高
+    };
+  } else if (location.includes('昆明') || latitude < 26) {
+    // 云南昆明(北纬25.0°): 高原山地气候,四季如春
+    // 11月实际温度: 白天18-22°C, 夜间7-15°C, 平均约12-18°C
+    return {
+      avgTemp: 15.5,      // 年平均15.5°C
+      amplitude: 8,       // 温差小,夏季最高23.5°C, 冬季最低7.5°C
+      humidityBase: 65    // 湿度适中
+    };
+  }
+
+  // 默认参数(中国中部地区)
+  return { avgTemp: 15, amplitude: 15, humidityBase: 65 };
+}
+
+/**
  * 生成带有自然波动的数据点
  */
 function generateDataPoint(
   dayIndex: number,
   seed: number,
+  location: string,
   isPrediction: boolean = false
 ): DataPoint {
   const date = new Date();
   date.setDate(date.getDate() - (isPrediction ? -dayIndex : 30 - dayIndex));
+
+  // 获取该地区的气候参数
+  const climateParams = getClimateParams(location);
 
   // 使用 sin 函数模拟季节性变化 + 随机噪声
   const randomFactor = Math.sin(seed * 100 + dayIndex) * 0.3 + 0.7;
@@ -25,15 +70,14 @@ function generateDataPoint(
   // 温度最低点在1月15日(第15天),最高点在7月15日(第196天)
   const seasonPhase = ((dayOfYear - 15) / 365) * Math.PI * 2;
 
-  // 温度: 年平均15°C,振幅15°C (冬季最低0°C,夏季最高30°C)
-  // 11月(第305-334天)温度约5-10°C,1月约0-5°C
-  const baseTemp = 15 + Math.sin(seasonPhase) * 15;
+  // 温度: 使用地区特定的年平均温度和振幅
+  const baseTemp = climateParams.avgTemp + Math.sin(seasonPhase) * climateParams.amplitude;
   const temperature = parseFloat(
     (baseTemp + (Math.random() - 0.5) * 4 * randomFactor).toFixed(1)
   );
 
-  // 湿度: 40-85%，与温度呈负相关
-  const baseHumidity = 65 - Math.sin(seasonPhase) * 15;
+  // 湿度: 使用地区特定的湿度基准,与温度呈负相关
+  const baseHumidity = climateParams.humidityBase - Math.sin(seasonPhase) * 15;
   const humidity = parseFloat(
     (baseHumidity + (Math.random() - 0.5) * 10 * randomFactor).toFixed(1)
   );
@@ -128,7 +172,7 @@ function generateFieldData(
   // 生成历史30天数据
   const historicalData: DataPoint[] = [];
   for (let i = 0; i < 30; i++) {
-    historicalData.push(generateDataPoint(i, seed, false));
+    historicalData.push(generateDataPoint(i, seed, location, false));
   }
 
   // 生成未来7天预测
